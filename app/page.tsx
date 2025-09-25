@@ -29,22 +29,24 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
-      <header className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-800">
+      <header className="bg-gray-800/30 backdrop-blur-sm border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <Play className="w-5 h-5 text-white" />
+          <div className="flex justify-between items-center py-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Play className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold">ClipEiro AI</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                ClipEiro AI
+              </span>
             </div>
             
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => setShowTestLogin(true)}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg font-medium"
               >
                 Login Teste
               </button>
@@ -54,67 +56,103 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            ClipEiro AI
-          </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Sistema inteligente para criação automática de clipes virais. 
-            Análise de tendências, automação completa e resultados garantidos.
-          </p>
+          <div className="mb-8">
+            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent leading-tight">
+              ClipEiro AI
+            </h1>
+            <p className="text-2xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
+              Sistema inteligente para criação automática de clipes virais. 
+              <br />
+              <span className="text-blue-400">Análise de tendências</span>, <span className="text-purple-400">automação completa</span> e <span className="text-pink-400">resultados garantidos</span>.
+            </p>
+          </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
             <button
               onClick={() => setShowTestLogin(true)}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-xl text-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105"
             >
               Começar Agora
             </button>
             <button
               onClick={() => router.push('/login')}
-              className="border border-gray-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-800 transition-all duration-300"
+              className="border-2 border-gray-600 text-white px-10 py-4 rounded-xl text-xl font-semibold hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 hover:scale-105"
             >
               Fazer Login
             </button>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+              <div className="text-3xl font-bold text-blue-400 mb-2">10K+</div>
+              <div className="text-gray-400">Clipes Criados</div>
+            </div>
+            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+              <div className="text-3xl font-bold text-purple-400 mb-2">95%</div>
+              <div className="text-gray-400">Taxa de Sucesso</div>
+            </div>
+            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+              <div className="text-3xl font-bold text-pink-400 mb-2">24/7</div>
+              <div className="text-gray-400">Automação</div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-800/30">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Funcionalidades</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              Funcionalidades
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Tecnologia avançada para maximizar seu potencial criativo
+            </p>
+          </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-              <Zap className="w-8 h-8 text-blue-500 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Análise Viral EUA</h3>
-              <p className="text-gray-400">Rastreamento de tendências em tempo real nos EUA</p>
+            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10">
+              <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6">
+                <Zap className="w-6 h-6 text-blue-400" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Análise Viral EUA</h3>
+              <p className="text-gray-400 leading-relaxed">Rastreamento de tendências em tempo real nos EUA com IA avançada</p>
             </div>
             
-            <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-              <Shield className="w-8 h-8 text-purple-500 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Automação Completa</h3>
-              <p className="text-gray-400">Criação e publicação automática de clipes</p>
+            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10">
+              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6">
+                <Shield className="w-6 h-6 text-purple-400" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Automação Completa</h3>
+              <p className="text-gray-400 leading-relaxed">Criação e publicação automática de clipes em múltiplas plataformas</p>
             </div>
             
-            <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-              <Globe className="w-8 h-8 text-green-500 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Multi-plataforma</h3>
-              <p className="text-gray-400">Instagram, TikTok e YouTube integrados</p>
+            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-green-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10">
+              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-6">
+                <Globe className="w-6 h-6 text-green-400" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Multi-plataforma</h3>
+              <p className="text-gray-400 leading-relaxed">Instagram, TikTok e YouTube integrados em uma única solução</p>
             </div>
             
-            <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-              <Crown className="w-8 h-8 text-yellow-500 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">IA Avançada</h3>
-              <p className="text-gray-400">Aprendizado contínuo e otimização</p>
+            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10">
+              <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center mb-6">
+                <Crown className="w-6 h-6 text-yellow-400" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-white">IA Avançada</h3>
+              <p className="text-gray-400 leading-relaxed">Aprendizado contínuo e otimização baseada em dados reais</p>
             </div>
             
-            <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-              <DollarSign className="w-8 h-8 text-red-500 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Monetização</h3>
-              <p className="text-gray-400">Planos premium com funcionalidades exclusivas</p>
+            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-red-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10">
+              <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center mb-6">
+                <DollarSign className="w-6 h-6 text-red-400" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-white">Monetização</h3>
+              <p className="text-gray-400 leading-relaxed">Planos premium com funcionalidades exclusivas e suporte prioritário</p>
             </div>
           </div>
         </div>
@@ -122,23 +160,30 @@ export default function Home() {
 
       {/* Test Login Modal */}
       {showTestLogin && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-gray-900 p-6 rounded-lg border border-gray-800 max-w-md w-full mx-4">
-            <h3 className="text-xl font-semibold mb-4">Login Teste</h3>
-            <p className="text-gray-400 mb-6">
-              Para testar o sistema, use qualquer login e senha.
-            </p>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-gray-800/90 p-8 rounded-2xl border border-gray-700 max-w-md w-full mx-4 shadow-2xl">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Play className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                Login Teste
+              </h3>
+              <p className="text-gray-400">
+                Para testar o sistema, use qualquer login e senha.
+              </p>
+            </div>
             
             <div className="flex gap-4">
               <button
                 onClick={handleTestLogin}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 flex-1"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 flex-1 font-semibold shadow-lg hover:shadow-blue-500/25"
               >
                 Entrar
               </button>
               <button
                 onClick={() => setShowTestLogin(false)}
-                className="border border-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-all duration-300"
+                className="border-2 border-gray-600 text-white px-8 py-4 rounded-xl hover:bg-gray-700 hover:border-gray-500 transition-all duration-300 font-semibold"
               >
                 Cancelar
               </button>
