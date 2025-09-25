@@ -14,6 +14,12 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: process.cwd(),
   },
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
 }
 
 module.exports = nextConfig
