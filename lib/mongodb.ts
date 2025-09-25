@@ -6,6 +6,15 @@ if (!MONGODB_URI) {
   throw new Error('Por favor, defina a variável MONGODB_URI no arquivo .env.local')
 }
 
+interface MongooseCache {
+  conn: typeof mongoose | null
+  promise: Promise<typeof mongoose> | null
+}
+
+declare global {
+  var mongoose: MongooseCache | undefined
+}
+
 let cached = global.mongoose
 
 if (!cached) {
