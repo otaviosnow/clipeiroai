@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: clipeiro
+    name: clipeiroai
     env: node
     plan: free
     buildCommand: npm install && npm run build
@@ -10,17 +10,13 @@ services:
         value: production
       - key: MONGODB_URI
         fromDatabase:
-          name: clipeiro-db
+          name: clipeiroai
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
       - key: NEXTAUTH_SECRET
         generateValue: true
       - key: NEXTAUTH_URL
-        value: https://clipeiro.onrender.com
-
-databases:
-  - name: clipeiro-db
-    plan: free
-    databaseName: clipeiro
-
+        value: https://clipeiroai.onrender.com
+      - key: DEV_BYPASS_AUTH
+        value: false
