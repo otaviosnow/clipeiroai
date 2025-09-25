@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
     // Criar contas de clipes baseadas nos perfis originais
     const clipAccounts = socialProfiles
-      .filter((profile: any) => profile.username.trim())
+      .filter((profile: any) => profile.username && typeof profile.username === 'string' && profile.username.trim())
       .map((profile: any) => ({
         platform: profile.platform,
         username: `${profile.username}_clips`,

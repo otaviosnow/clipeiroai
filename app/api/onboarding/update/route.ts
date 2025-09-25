@@ -13,23 +13,23 @@ export async function PUT(request: NextRequest) {
 
     // Atualizar os usernames das redes sociais
     const socialProfiles = Object.entries(socialUsernames)
-      .filter(([_, username]) => username.trim())
+      .filter(([_, username]) => username && typeof username === 'string' && username.trim())
       .map(([platform, username]) => ({
         platform,
-        username: username.trim(),
-        originalUsername: username.trim(),
+        username: (username as string).trim(),
+        originalUsername: (username as string).trim(),
         isActive: true,
         createdAt: new Date()
       }))
 
     // Criar contas de clipes baseadas nos usernames finais
     const clipAccounts = Object.entries(socialUsernames)
-      .filter(([_, username]) => username.trim())
+      .filter(([_, username]) => username && typeof username === 'string' && username.trim())
       .map(([platform, username]) => ({
         platform,
-        username: `${username.trim()}_clips`,
+        username: `${(username as string).trim()}_clips`,
         status: 'pending',
-        originalProfile: username.trim()
+        originalProfile: (username as string).trim()
       }))
 
     const updatedData = await OnboardingData.findOneAndUpdate(
