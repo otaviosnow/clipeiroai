@@ -1,15 +1,14 @@
 services:
   - type: web
     name: clipeiroai
-    env: node
+    env: docker
     plan: free
-    buildCommand: npm ci && npm run build
-    startCommand: npm start
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
-        value: mongodb+srv://clipeiroai:SUA_SENHA_AQUI@cluster0.0afjdgs.mongodb.net/clipeiro?retryWrites=true&w=majority&appName=Cluster0
+        value: mongodb+srv://clipeiroai:otaviosnow2012@cluster0.0afjdgs.mongodb.net/clipeiro?retryWrites=true&w=majority&appName=Cluster0
       - key: JWT_SECRET
         value: clipeiro-super-secret-jwt-key-2024
       - key: NEXTAUTH_SECRET
