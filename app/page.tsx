@@ -70,12 +70,12 @@ export default function Home() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-            <button
-              onClick={() => setShowTestLogin(true)}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-xl text-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105"
-            >
-              Começar Agora
-            </button>
+              <button
+                onClick={() => router.push('/onboarding')}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-xl text-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105"
+              >
+                Começar Agora
+              </button>
             <button
               onClick={() => router.push('/login')}
               className="border-2 border-gray-600 text-white px-10 py-4 rounded-xl text-xl font-semibold hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 hover:scale-105"

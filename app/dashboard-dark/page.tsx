@@ -15,8 +15,10 @@ import {
   Target,
   TrendingUp,
   Users,
-  Video
+  Video,
+  RefreshCw
 } from 'lucide-react'
+import { useAccountData } from '@/lib/hooks/useAccountData'
 
 export default function DashboardDark() {
   const router = useRouter()
@@ -27,6 +29,9 @@ export default function DashboardDark() {
     isTest: boolean;
   } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  
+  // Hook para dados das contas
+  const { accountData, connectedAccounts, isLoading: dataLoading, refreshData } = useAccountData()
 
   console.log('📊 Dashboard rendered')
 
@@ -75,172 +80,135 @@ export default function DashboardDark() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-cyan-900 to-blue-900 text-white relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-cyan-500/20 rounded-full blur-xl"></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-blue-500/20 rounded-full blur-xl"></div>
+        <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-purple-500/20 rounded-full blur-xl"></div>
+      </div>
+
       {/* Header */}
-      <header className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-800">
+      <header className="relative z-10 bg-gray-900/50 backdrop-blur-sm border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <Play className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                <Play className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xl font-bold">ClipEiro AI</span>
+              <span className="text-xl font-bold">Clipeiro AI</span>
             </div>
             
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-400">
-                Olá, {user?.name || 'Usuário'}
-              </span>
-              <button
-                onClick={handleLogout}
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <LogOut className="w-5 h-5" />
+              <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-2">
+                <Settings className="w-4 h-4" />
+                <span>Assinar Studio AI</span>
               </button>
+              <button className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-2">
+                <Crown className="w-4 h-4" />
+                <span>Assinar Clipeiro PRO</span>
+              </button>
+              <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">Vg</span>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="flex">
+      <div className="flex relative z-10">
         {/* Sidebar */}
-        <aside className="w-64 bg-gray-900/50 min-h-screen p-6">
-          <nav className="space-y-4">
-            <button
-              onClick={handleNewClip}
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 flex items-center space-x-2"
-            >
-              <Play className="w-5 h-5" />
-              <span>Novo Clipe</span>
+        <aside className="w-64 bg-gray-900/50 backdrop-blur-sm min-h-screen p-6">
+          {/* Logo */}
+          <div className="flex items-center space-x-2 mb-8">
+            <div className="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+              <Play className="w-4 h-4 text-white" />
+            </div>
+            <span className="text-xl font-bold">Clipeiro AI</span>
+          </div>
+
+          <nav className="space-y-2">
+            {/* Home - Active */}
+            <button className="w-full text-left px-4 py-3 rounded-lg bg-gray-800 border-l-4 border-cyan-400 flex items-center space-x-3">
+              <div className="w-5 h-5">🏠</div>
+              <span className="font-medium">Home</span>
             </button>
             
-            <div className="space-y-2">
-              <button
-                onClick={() => router.push('/analytics-portugues')}
-                className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-2"
-              >
-                <BarChart3 className="w-5 h-5" />
-                <span>Analytics</span>
-              </button>
-              
-              <button
-                onClick={() => router.push('/viral-analysis')}
-                className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-2"
-              >
-                <TrendingUp className="w-5 h-5" />
-                <span>Análise Viral EUA</span>
-              </button>
-              
-              <button
-                onClick={() => router.push('/automation')}
-                className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-2"
-              >
-                <Zap className="w-5 h-5" />
-                <span>Automação</span>
-              </button>
-              
-              <button
-                onClick={() => router.push('/plans')}
-                className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-2"
-              >
-                <Crown className="w-5 h-5" />
-                <span>Planos</span>
-              </button>
-            </div>
+            <button
+              onClick={() => router.push('/analytics-portugues')}
+              className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-3"
+            >
+              <BarChart3 className="w-5 h-5" />
+              <span>Analytics</span>
+            </button>
+            
+            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-3">
+              <Settings className="w-5 h-5" />
+              <span>Studio AI</span>
+              <span className="ml-auto bg-green-500 text-white text-xs px-2 py-1 rounded-full">NEW</span>
+            </button>
+            
+            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-3">
+              <div className="w-5 h-5">✂️</div>
+              <span>Meus cortes</span>
+            </button>
+            
+            <button className="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-3">
+              <div className="w-5 h-5">⭐</div>
+              <span>Insights da AI</span>
+            </button>
           </nav>
+
+          {/* New Clip Button */}
+          <div className="mt-8">
+            <button
+              onClick={handleNewClip}
+              className="w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-4 py-3 rounded-lg hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 flex items-center space-x-2"
+            >
+              <div className="w-5 h-5">+</div>
+              <span>Novo corte</span>
+            </button>
+          </div>
+
+          {/* Profile Button */}
+          <div className="mt-8">
+            <button className="w-full border border-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center space-x-2">
+              <div className="w-5 h-5">👤</div>
+              <span>Meu perfil</span>
+            </button>
+          </div>
+
+          {/* Footer */}
+          <div className="absolute bottom-6 left-6">
+            <p className="text-gray-400 text-xs">Clipeiro® 2025</p>
+          </div>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
-            
-            {/* Stats Cards */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-400 text-sm">Clipes Criados</p>
-                    <p className="text-2xl font-bold">24</p>
-                  </div>
-                  <Video className="w-8 h-8 text-blue-500" />
+        <main className="flex-1 p-6 flex items-center justify-center">
+          <div className="w-full max-w-4xl">
+            {/* Central Card */}
+            <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-12 text-center">
+              <div className="w-24 h-24 bg-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-8">
+                <div className="w-12 h-12 border-2 border-cyan-400 rounded-full flex items-center justify-center">
+                  <div className="w-6 h-6 text-cyan-400 text-2xl">+</div>
                 </div>
               </div>
               
-              <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-400 text-sm">Visualizações</p>
-                    <p className="text-2xl font-bold">12.5K</p>
-                  </div>
-                  <Target className="w-8 h-8 text-green-500" />
-                </div>
-              </div>
+              <h2 className="text-2xl font-bold text-white mb-4">
+                Comece criando seu primeiro corte
+              </h2>
               
-              <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-400 text-sm">Engajamento</p>
-                    <p className="text-2xl font-bold">8.2%</p>
-                  </div>
-                  <TrendingUp className="w-8 h-8 text-purple-500" />
-                </div>
-              </div>
+              <p className="text-gray-400 mb-8 max-w-md mx-auto">
+                Faça upload de um vídeo e deixe nossa IA criar múltiplos clipes virais automaticamente
+              </p>
               
-              <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-400 text-sm">Seguidores</p>
-                    <p className="text-2xl font-bold">1.2K</p>
-                  </div>
-                  <Users className="w-8 h-8 text-yellow-500" />
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                <h3 className="text-xl font-semibold mb-4">Ações Rápidas</h3>
-                <div className="space-y-3">
-                  <button
-                    onClick={() => router.push('/upload-video')}
-                    className="w-full text-left px-4 py-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
-                  >
-                    Upload de Vídeo
-                  </button>
-                  <button
-                    onClick={() => router.push('/select-nicho')}
-                    className="w-full text-left px-4 py-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
-                  >
-                    Selecionar Nicho
-                  </button>
-                  <button
-                    onClick={() => router.push('/test-automation')}
-                    className="w-full text-left px-4 py-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
-                  >
-                    Testar Automação
-                  </button>
-                </div>
-              </div>
-              
-              <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
-                <h3 className="text-xl font-semibold mb-4">Status do Sistema</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span>MongoDB</span>
-                    <span className="text-green-500">Conectado</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Análise Viral</span>
-                    <span className="text-green-500">Ativo</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Automação</span>
-                    <span className="text-yellow-500">Pausado</span>
-                  </div>
-                </div>
-              </div>
+              <button
+                onClick={handleNewClip}
+                className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-semibold py-3 px-8 rounded-lg hover:from-cyan-500 hover:to-blue-600 transition-all duration-300"
+              >
+                Criar Primeiro Corte
+              </button>
             </div>
           </div>
         </main>
