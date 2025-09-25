@@ -5,17 +5,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "setup": "node scripts/setup.js",
-    "dev:setup": "node scripts/dev-setup.js",
-    "docker:build": "docker build -t clipeiro .",
-    "docker:run": "docker run -p 3000:3000 clipeiro",
-    "docker:compose": "docker-compose up -d"
+    "dev:setup": "node scripts/dev-setup.js"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
