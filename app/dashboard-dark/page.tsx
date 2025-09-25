@@ -20,7 +20,12 @@ import {
 
 export default function DashboardDark() {
   const router = useRouter()
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<{
+    id: string;
+    name: string;
+    email: string;
+    isTest: boolean;
+  } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   console.log('📊 Dashboard rendered')
