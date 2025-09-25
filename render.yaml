@@ -3,20 +3,18 @@ services:
     name: clipeiroai
     env: node
     plan: free
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci && npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
-        fromDatabase:
-          name: clipeiroai
-          property: connectionString
+        value: mongodb+srv://clipeiroai:SUA_SENHA_AQUI@cluster0.0afjdgs.mongodb.net/clipeiro?retryWrites=true&w=majority&appName=Cluster0
       - key: JWT_SECRET
-        generateValue: true
+        value: clipeiro-super-secret-jwt-key-2024
       - key: NEXTAUTH_SECRET
-        generateValue: true
+        value: clipeiro-nextauth-secret-key-2024
       - key: NEXTAUTH_URL
-        value: https://clipeiroai.onrender.com
+        value: https://clipeiroai-1.onrender.com
       - key: DEV_BYPASS_AUTH
         value: false
