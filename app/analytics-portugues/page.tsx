@@ -12,7 +12,14 @@ export default function AnalyticsPortugues() {
     totalComments: 0,
     totalShares: 0,
     engagementRate: 0,
-    topClips: []
+    topClips: [] as Array<{
+      id: number;
+      title: string;
+      views: number;
+      likes: number;
+      comments: number;
+      shares: number;
+    }>
   })
   const [isLoading, setIsLoading] = useState(true)
 
