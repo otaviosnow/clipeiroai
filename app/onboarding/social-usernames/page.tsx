@@ -13,54 +13,88 @@ export default function SocialUsernamesPage() {
   const [isProcessing, setIsProcessing] = useState(false)
 
   useEffect(() => {
-    // Verificar se há dados das etapas anteriores
-    const onboardingData = localStorage.getItem('onboardingData')
-    const productChoice = localStorage.getItem('productChoice')
+    // Verificar se há userId das etapas anteriores
+    const userId = localStorage.getItem('onboardingUserId')
     
-    if (!onboardingData || !productChoice) {
+    if (!userId) {
       router.push('/onboarding')
     } else {
-      // Preencher com dados já fornecidos
-      const data = JSON.parse(onboardingData)
-      setInstagram(data.socialProfiles.instagram || '')
-      setTiktok(data.socialProfiles.tiktok || '')
-      setYoutube(data.socialProfiles.youtube || '')
+      // Buscar dados do banco para preencher os campos
+      fetchOnboardingData(userId)
     }
   }, [router])
+
+  const fetchOnboardingData = async (userId: string) => {
+    try {
+      const response = await fetch(`/api/onboarding?userId=${userId}`)
+      if (response.ok) {
+        const data = await response.json()
+        if (data.success) {
+          // Preencher campos com dados do banco
+          data.data.socialProfiles.forEach((profile: any) => {
+            if (profile.platform === 'instagram') setInstagram(profile.username)
+            if (profile.platform === 'tiktok') setTiktok(profile.username)
+            if (profile.platform === 'youtube') setYoutube(profile.username)
+          })
+        }
+      }
+    } catch (error) {
+      console.error('❌ Error fetching onboarding data:', error)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     
-    // Simular processamento
-    setTimeout(() => {
+    try {
+      const userId = localStorage.getItem('onboardingUserId')
+      if (!userId) {
+        router.push('/onboarding')
+        return
+      }
+
+      // Atualizar dados no banco com os usernames finais
+      const response = await fetch('/api/onboarding/update', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          socialUsernames: {
+            instagram: instagram.trim(),
+            tiktok: tiktok.trim(),
+            youtube: youtube.trim()
+          }
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar dados')
+      }
+
       setIsLoading(false)
       setIsProcessing(true)
       
       // Simular criação de contas de clipes
       setTimeout(() => {
-        // Salvar dados finais
-        const finalData = {
-          ...JSON.parse(localStorage.getItem('onboardingData') || '{}'),
-          productChoice: JSON.parse(localStorage.getItem('productChoice') || '{}'),
-          socialUsernames: {
-            instagram: instagram.trim(),
-            tiktok: tiktok.trim(),
-            youtube: youtube.trim()
-          },
-          clipAccounts: [
-            { platform: 'instagram', username: `${instagram}_clips`, status: 'connected' },
-            { platform: 'tiktok', username: `${tiktok}_clips`, status: 'connected' },
-            { platform: 'youtube', username: `${youtube}_clips`, status: 'connected' }
-          ]
-        }
+        // Limpar dados temporários
+        localStorage.removeItem('onboardingUserId')
         
-        localStorage.setItem('finalOnboardingData', JSON.stringify(finalData))
+        // Salvar dados finais para o dashboard
+        localStorage.setItem('userOnboardingCompleted', 'true')
+        localStorage.setItem('userId', userId)
         
         // Ir para dashboard
         router.push('/dashboard-dark')
       }, 3000)
-    }, 1000)
+      
+    } catch (error) {
+      console.error('❌ Error updating onboarding data:', error)
+      alert('Erro ao finalizar configuração. Tente novamente.')
+      setIsLoading(false)
+    }
   }
 
   if (isProcessing) {

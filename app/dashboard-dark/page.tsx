@@ -32,6 +32,9 @@ export default function DashboardDark() {
   
   // Hook para dados das contas
   const { accountData, connectedAccounts, isLoading: dataLoading, refreshData } = useAccountData()
+  
+  // Estado para dados do onboarding
+  const [onboardingData, setOnboardingData] = useState<any>(null)
 
   console.log('📊 Dashboard rendered')
 
@@ -43,6 +46,25 @@ export default function DashboardDark() {
     if (testUser) {
       console.log('✅ Test user found:', JSON.parse(testUser))
       setUser(JSON.parse(testUser))
+      setIsLoading(false)
+      return
+    }
+
+    // Check for onboarding completed user
+    const onboardingCompleted = localStorage.getItem('userOnboardingCompleted')
+    const userId = localStorage.getItem('userId')
+    
+    if (onboardingCompleted && userId) {
+      console.log('✅ Onboarding completed user found:', userId)
+      setUser({
+        id: userId,
+        name: 'Usuário Clipeiro',
+        email: 'usuario@clipeiro.com',
+        isTest: false
+      })
+      
+      // Buscar dados do onboarding
+      fetchOnboardingData(userId)
       setIsLoading(false)
       return
     }
@@ -59,6 +81,21 @@ export default function DashboardDark() {
     setUser(realUser)
     setIsLoading(false)
   }, [])
+
+  const fetchOnboardingData = async (userId: string) => {
+    try {
+      const response = await fetch(`/api/onboarding?userId=${userId}`)
+      if (response.ok) {
+        const data = await response.json()
+        if (data.success) {
+          setOnboardingData(data.data)
+          console.log('✅ Onboarding data loaded:', data.data)
+        }
+      }
+    } catch (error) {
+      console.error('❌ Error fetching onboarding data:', error)
+    }
+  }
 
   const handleLogout = () => {
     console.log('🚪 Logout initiated')

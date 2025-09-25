@@ -16,22 +16,50 @@ export default function OnboardingPage() {
     e.preventDefault()
     setIsLoading(true)
     
-    // Simular processamento
-    setTimeout(() => {
-      // Salvar dados no localStorage
-      const userData = {
-        objective,
-        socialProfiles: {
-          instagram: instagram.trim(),
-          tiktok: tiktok.trim(),
-          youtube: youtube.trim()
-        }
+    try {
+      // Gerar ID único para o usuário
+      const userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      
+      // Preparar dados para envio
+      const socialProfiles = [
+        { platform: 'instagram', username: instagram.trim() },
+        { platform: 'tiktok', username: tiktok.trim() },
+        { platform: 'youtube', username: youtube.trim() }
+      ].filter(profile => profile.username)
+
+      // Salvar dados no banco
+      const response = await fetch('/api/onboarding', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          objective,
+          socialProfiles,
+          productChoice: 'clipeiro-ai'
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro ao salvar dados')
       }
-      localStorage.setItem('onboardingData', JSON.stringify(userData))
+
+      const result = await response.json()
+      console.log('✅ Onboarding data saved:', result)
+
+      // Salvar userId no localStorage para próximas etapas
+      localStorage.setItem('onboardingUserId', userId)
       
       // Ir para próxima etapa
       router.push('/onboarding/choose-product')
-    }, 2000)
+      
+    } catch (error) {
+      console.error('❌ Error saving onboarding data:', error)
+      alert('Erro ao salvar dados. Tente novamente.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

@@ -9,9 +9,9 @@ export default function ChooseProductPage() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    // Verificar se há dados da etapa anterior
-    const onboardingData = localStorage.getItem('onboardingData')
-    if (!onboardingData) {
+    // Verificar se há userId da etapa anterior
+    const userId = localStorage.getItem('onboardingUserId')
+    if (!userId) {
       router.push('/onboarding')
     }
   }, [router])
