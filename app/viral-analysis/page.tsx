@@ -8,7 +8,15 @@ export default function ViralAnalysis() {
   const router = useRouter()
   const [selectedPeriod, setSelectedPeriod] = useState('weekly')
   const [selectedNicho, setSelectedNicho] = useState('all')
-  const [viralData, setViralData] = useState([])
+  const [viralData, setViralData] = useState<Array<{
+    id: number;
+    title: string;
+    platform: string;
+    views: string;
+    engagement: string;
+    hashtags: string[];
+    niche: string;
+  }>>([])
   const [isLoading, setIsLoading] = useState(true)
 
   console.log('📊 Viral Analysis page rendered')
