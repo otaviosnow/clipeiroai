@@ -30,6 +30,12 @@ export default function Home() {
               >
                 Login
               </button>
+              <button
+                onClick={() => router.push('/register')}
+                className="border-2 border-gray-600 text-white px-6 py-3 rounded-xl hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 font-medium"
+              >
+                Cadastrar
+              </button>
             </div>
           </div>
         </div>
@@ -49,20 +55,20 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+                <button
+                  onClick={() => router.push('/register')}
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-xl text-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105"
+                >
+                  Criar Conta
+                </button>
               <button
-                onClick={() => router.push('/onboarding')}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-xl text-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105"
+                onClick={() => router.push('/login')}
+                className="border-2 border-gray-600 text-white px-10 py-4 rounded-xl text-xl font-semibold hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 hover:scale-105"
               >
-                Começar Agora
+                Fazer Login
               </button>
-            <button
-              onClick={() => router.push('/login')}
-              className="border-2 border-gray-600 text-white px-10 py-4 rounded-xl text-xl font-semibold hover:bg-gray-800 hover:border-gray-500 transition-all duration-300 hover:scale-105"
-            >
-              Fazer Login
-            </button>
-          </div>
+            </div>
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -94,45 +100,45 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10">
-              <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:scale-105">
+              <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-blue-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Análise Viral EUA</h3>
-              <p className="text-gray-400 leading-relaxed">Rastreamento de tendências em tempo real nos EUA com IA avançada</p>
+              <h3 className="text-lg font-semibold mb-3 text-white">Análise Viral EUA</h3>
+              <p className="text-gray-400 leading-relaxed text-sm">Rastreamento de tendências em tempo real nos EUA com IA avançada</p>
             </div>
             
-            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10">
-              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10 hover:scale-105">
+              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-purple-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Automação Completa</h3>
-              <p className="text-gray-400 leading-relaxed">Criação e publicação automática de clipes em múltiplas plataformas</p>
+              <h3 className="text-lg font-semibold mb-3 text-white">Automação Completa</h3>
+              <p className="text-gray-400 leading-relaxed text-sm">Criação e publicação automática de clipes em múltiplas plataformas</p>
             </div>
             
-            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-green-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10">
-              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-green-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10 hover:scale-105">
+              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4">
                 <Globe className="w-6 h-6 text-green-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Multi-plataforma</h3>
-              <p className="text-gray-400 leading-relaxed">Instagram, TikTok e YouTube integrados em uma única solução</p>
+              <h3 className="text-lg font-semibold mb-3 text-white">Multi-plataforma</h3>
+              <p className="text-gray-400 leading-relaxed text-sm">Instagram, TikTok e YouTube integrados em uma única solução</p>
             </div>
             
-            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10">
-              <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10 hover:scale-105">
+              <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center mb-4">
                 <Crown className="w-6 h-6 text-yellow-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">IA Avançada</h3>
-              <p className="text-gray-400 leading-relaxed">Aprendizado contínuo e otimização baseada em dados reais</p>
+              <h3 className="text-lg font-semibold mb-3 text-white">IA Avançada</h3>
+              <p className="text-gray-400 leading-relaxed text-sm">Aprendizado contínuo e otimização baseada em dados reais</p>
             </div>
             
-            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-red-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10">
-              <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center mb-6">
-                <DollarSign className="w-6 h-6 text-red-400" />
+            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10 hover:scale-105">
+              <div className="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-4">
+                <Play className="w-6 h-6 text-cyan-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Monetização</h3>
-              <p className="text-gray-400 leading-relaxed">Planos premium com funcionalidades exclusivas e suporte prioritário</p>
+              <h3 className="text-lg font-semibold mb-3 text-white">Studio AI</h3>
+              <p className="text-gray-400 leading-relaxed text-sm">Transforme vídeos longos em clips virais com inteligência artificial</p>
             </div>
           </div>
         </div>

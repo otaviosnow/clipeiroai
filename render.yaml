@@ -3,9 +3,9 @@ services:
     name: clipeiroai
     env: node
     plan: free
-    buildCommand: npm run render-build
-    startCommand: npm run render-start
-    rootDir: src
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    rootDir: ./
     envVars:
       - key: NODE_ENV
         value: production

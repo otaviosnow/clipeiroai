@@ -46,7 +46,13 @@ export default function Login() {
       localStorage.setItem('authToken', result.token)
       localStorage.setItem('user', JSON.stringify(result.user))
       
-      router.push('/dashboard-dark')
+      // Verificar se é primeiro login (sem onboarding)
+      const hasOnboarding = localStorage.getItem(`onboarding_${result.user.id}`)
+      if (!hasOnboarding) {
+        router.push('/onboarding')
+      } else {
+        router.push('/dashboard-dark')
+      }
       
     } catch (error) {
       console.error('❌ Login failed:', error)

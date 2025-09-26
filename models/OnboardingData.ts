@@ -10,6 +10,7 @@ export interface SocialProfile {
 
 export interface OnboardingDataDocument extends mongoose.Document {
   userId: string
+  userEmail: string
   objective: string
   socialProfiles: SocialProfile[]
   productChoice: 'clipeiro-ai'
@@ -29,6 +30,10 @@ const OnboardingDataSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true
+  },
+  userEmail: {
+    type: String,
+    required: true
   },
   objective: {
     type: String,

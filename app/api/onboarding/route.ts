@@ -7,9 +7,9 @@ export async function POST(request: NextRequest) {
     await connectDB()
     
     const body = await request.json()
-    const { userId, objective, socialProfiles, productChoice } = body
+    const { userId, userEmail, objective, socialProfiles, productChoice } = body
 
-    console.log('📝 Saving onboarding data:', { userId, objective, socialProfiles, productChoice })
+    console.log('📝 Saving onboarding data:', { userId, userEmail, objective, socialProfiles, productChoice })
 
     // Criar contas de clipes baseadas nos perfis originais
     const clipAccounts = socialProfiles
@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
 
     const onboardingData = new OnboardingData({
       userId,
+      userEmail,
       objective,
       socialProfiles: socialProfiles.map((profile: any) => ({
         platform: profile.platform,

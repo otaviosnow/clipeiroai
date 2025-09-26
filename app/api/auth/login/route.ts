@@ -5,6 +5,10 @@ import jwt from 'jsonwebtoken'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'clipeiro-super-secret-jwt-key-2024'
 
+if (!process.env.JWT_SECRET) {
+  console.warn('⚠️ JWT_SECRET não definida nas variáveis de ambiente')
+}
+
 export async function POST(request: NextRequest) {
   try {
     await connectDB()

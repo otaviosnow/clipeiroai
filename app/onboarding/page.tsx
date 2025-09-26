@@ -7,6 +7,7 @@ import { Lightbulb, Instagram, Music, Youtube } from 'lucide-react'
 export default function OnboardingPage() {
   const router = useRouter()
   const [objective, setObjective] = useState('')
+  const [email, setEmail] = useState('')
   const [instagram, setInstagram] = useState('')
   const [tiktok, setTiktok] = useState('')
   const [youtube, setYoutube] = useState('')
@@ -35,6 +36,7 @@ export default function OnboardingPage() {
         },
         body: JSON.stringify({
           userId,
+          userEmail: email,
           objective,
           socialProfiles,
           productChoice: 'clipeiro-ai'
@@ -100,6 +102,21 @@ export default function OnboardingPage() {
           {/* Form */}
           <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8">
             <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Email Section */}
+              <div>
+                <label className="block text-white text-lg font-semibold mb-3">
+                  Seu email <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full p-4 bg-gray-800 rounded-lg border border-gray-600 focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none text-white placeholder-gray-400"
+                  placeholder="seu@email.com"
+                />
+              </div>
+
               {/* Objective Section */}
               <div>
                 <label className="block text-white text-lg font-semibold mb-3">
