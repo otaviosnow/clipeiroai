@@ -4,7 +4,7 @@ import User from '@/models/User'
 
 export async function POST(request: NextRequest) {
   try {
-    await connectDB()
+    console.log('📝 Registration API called')
     
     const body = await request.json()
     const { name, email, password } = body
@@ -23,6 +23,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { success: false, message: 'Senha deve ter pelo menos 6 caracteres' },
         { status: 400 }
+      )
+    }
+
+    // Tentar conectar ao MongoDB com timeout
+    try {
+      const connectPromise = connectDB()
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('MongoDB connection timeout')), 8000)
+      )
+      
+      await Promise.race([connectPromise, timeoutPromise])
+      console.log('✅ MongoDB connected')
+    } catch (error) {
+      console.error('❌ MongoDB connection failed:', error)
+      return NextResponse.json(
+        { success: false, message: 'Erro de conexão com o banco de dados. Tente novamente em alguns minutos.' },
+        { status: 503 }
       )
     }
 

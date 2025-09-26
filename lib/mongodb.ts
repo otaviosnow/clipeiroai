@@ -6,6 +6,17 @@ if (!process.env.MONGODB_URI) {
   console.warn('⚠️ MONGODB_URI não definida nas variáveis de ambiente')
 }
 
+// Configurações de conexão otimizadas para Render
+const mongooseOptions = {
+  bufferCommands: false,
+  maxPoolSize: 10,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+  family: 4, // Use IPv4, skip trying IPv6
+  retryWrites: true,
+  w: 'majority'
+}
+
 interface MongooseCache {
   conn: typeof mongoose | null
   promise: Promise<typeof mongoose> | null
@@ -27,13 +38,12 @@ async function connectDB() {
   }
 
   if (!cached!.promise) {
-    const opts = {
-      bufferCommands: false,
-    }
-
-    cached!.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached!.promise = mongoose.connect(MONGODB_URI!, mongooseOptions).then((mongoose) => {
       console.log('✅ MongoDB connected successfully')
       return mongoose
+    }).catch((error) => {
+      console.error('❌ MongoDB connection failed:', error.message)
+      throw error
     })
   }
 
