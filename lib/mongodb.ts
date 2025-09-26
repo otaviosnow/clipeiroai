@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
-const MONGODB_URI = process.env.MONGODB_URI
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://clipeiroai:otaviosnow2012@cluster0.0afjdgs.mongodb.net/clipeiro?retryWrites=true&w=majority&appName=Cluster0'
 
 if (!MONGODB_URI) {
-  throw new Error('Por favor, defina a variável MONGODB_URI no arquivo .env.local')
+  console.warn('⚠️ MONGODB_URI não definida, usando fallback')
 }
 
 interface MongooseCache {
