@@ -1,29 +1,101 @@
+# 🚀 DOCKER COMPOSE EXCEPCIONAL - ARQUITETURA COMPLETA
 version: '3.8'
 
 services:
-  app:
+  # 🎯 APLICAÇÃO PRINCIPAL
+  clipeiro-app:
     build: .
     ports:
       - "3000:3000"
     environment:
+      - NODE_ENV=production
       - MONGODB_URI=mongodb://mongodb:27017/clipeiro
-      - JWT_SECRET=your_jwt_secret_here
-      - NEXTAUTH_SECRET=your_nextauth_secret_here
-      - NEXTAUTH_URL=http://localhost:3000
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
     depends_on:
       - mongodb
+      - redis
+      - nginx
     volumes:
       - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
+  # 🗄️ MONGODB COM REPLICA SET
   mongodb:
-    image: mongo:7
+    image: mongo:7.0
     ports:
       - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=clipeiro2024
+      - MONGO_INITDB_DATABASE=clipeiro
     volumes:
       - mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+    command: mongod --replSet rs0 --bind_ip_all
+    restart: unless-stopped
+
+  # 🔄 REDIS PARA CACHE E SESSÕES
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --requirepass clipeiro2024
+    restart: unless-stopped
+
+  # 🌐 NGINX REVERSE PROXY
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - clipeiro-app
+    restart: unless-stopped
+
+  # 📊 MONITORAMENTO
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    restart: unless-stopped
+
+  # 📈 GRAFANA DASHBOARDS
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
     environment:
-      - MONGO_INITDB_DATABASE=clipeiro
+      - GF_SECURITY_ADMIN_PASSWORD=clipeiro2024
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: unless-stopped
 
 volumes:
   mongodb_data:
-
+  redis_data:
+  prometheus_data:
+  grafana_data:

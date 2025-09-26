@@ -1,0 +1,39 @@
+# 📊 PROMETHEUS CONFIGURAÇÃO EXCEPCIONAL
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert_rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # 🎯 APLICAÇÃO PRINCIPAL
+  - job_name: 'clipeiro-app'
+    static_configs:
+      - targets: ['clipeiro-app:3000']
+    metrics_path: '/api/metrics'
+    scrape_interval: 10s
+
+  # 🗄️ MONGODB
+  - job_name: 'mongodb'
+    static_configs:
+      - targets: ['mongodb:27017']
+    scrape_interval: 30s
+
+  # 🔄 REDIS
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    scrape_interval: 30s
+
+  # 🌐 NGINX
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:80']
+    scrape_interval: 30s
