@@ -6,6 +6,8 @@ services:
     buildCommand: npm ci && npm run build
     startCommand: npm start
     rootDir: ./
+    healthCheckPath: /api/health
+    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
@@ -19,3 +21,7 @@ services:
         value: https://clipeiroai-1.onrender.com
       - key: DEV_BYPASS_AUTH
         value: false
+      - key: LOG_LEVEL
+        value: info
+      - key: REDIS_URL
+        value: redis://redis:6379
