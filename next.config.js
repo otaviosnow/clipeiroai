@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost', 'clipeiroai-1.onrender.com'],
+    domains: ['localhost', 'clipeiroai-1.onrender.com', 'clipeiroai.onrender.com'],
   },
-  output: 'standalone',
-  distDir: '.next',
   experimental: {
     outputFileTracingRoot: process.cwd(),
   },
