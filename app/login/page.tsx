@@ -11,20 +11,49 @@ export default function Login() {
     password: ''
   })
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   console.log('🔐 Login page rendered')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    
-    console.log('📝 Login form submitted:', formData)
-    
-    // Simulate login
-    setTimeout(() => {
-      console.log('✅ Login successful')
+    setError('')
+
+    try {
+      // Enviar dados para API
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        setError(result.message || 'Erro ao fazer login')
+        return
+      }
+
+      console.log('✅ Login successful:', result.user)
+      
+      // Salvar token e dados do usuário
+      localStorage.setItem('authToken', result.token)
+      localStorage.setItem('user', JSON.stringify(result.user))
+      
       router.push('/dashboard-dark')
-    }, 1000)
+      
+    } catch (error) {
+      console.error('❌ Login failed:', error)
+      setError('Erro ao conectar com o servidor')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +126,12 @@ export default function Login() {
               />
             </div>
             
+            {error && (
+              <div className="bg-red-500/20 border border-red-500 text-red-400 px-4 py-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={isLoading}

@@ -41,16 +41,18 @@ export default function DashboardDark() {
   useEffect(() => {
     console.log('🔍 Checking authentication...')
     
-    // Check for test user in localStorage
-    const testUser = localStorage.getItem('testUser')
-    if (testUser) {
-      console.log('✅ Test user found:', JSON.parse(testUser))
-      setUser(JSON.parse(testUser))
+    // Check for authenticated user
+    const authToken = localStorage.getItem('authToken')
+    const userData = localStorage.getItem('user')
+    
+    if (authToken && userData) {
+      console.log('✅ Authenticated user found:', JSON.parse(userData))
+      setUser(JSON.parse(userData))
       setIsLoading(false)
       return
     }
 
-    // Check for onboarding completed user
+    // Check for onboarding completed user (fallback)
     const onboardingCompleted = localStorage.getItem('userOnboardingCompleted')
     const userId = localStorage.getItem('userId')
     
@@ -69,18 +71,10 @@ export default function DashboardDark() {
       return
     }
 
-    // Check for real user (simulated)
-    const realUser = {
-      id: 'user-123',
-      name: 'Usuário Real',
-      email: 'usuario@clipeiro.com',
-      isTest: false
-    }
-    
-    console.log('✅ Real user set:', realUser)
-    setUser(realUser)
-    setIsLoading(false)
-  }, [])
+    // No authenticated user found, redirect to login
+    console.log('❌ No authenticated user found, redirecting to login')
+    router.push('/login')
+  }, [router])
 
   const fetchOnboardingData = async (userId: string) => {
     try {
@@ -99,6 +93,8 @@ export default function DashboardDark() {
 
   const handleLogout = () => {
     console.log('🚪 Logout initiated')
+    localStorage.removeItem('authToken')
+    localStorage.removeItem('user')
     localStorage.removeItem('testUser')
     router.push('/')
   }

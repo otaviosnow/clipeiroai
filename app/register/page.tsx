@@ -13,20 +13,56 @@ export default function Register() {
     confirmPassword: ''
   })
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   console.log('📝 Register page rendered')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    
-    console.log('📝 Register form submitted:', formData)
-    
-    // Simulate registration
-    setTimeout(() => {
-      console.log('✅ Registration successful')
-      router.push('/dashboard-dark')
-    }, 1000)
+    setError('')
+
+    try {
+      // Validações
+      if (formData.password !== formData.confirmPassword) {
+        setError('As senhas não coincidem')
+        return
+      }
+
+      if (formData.password.length < 6) {
+        setError('A senha deve ter pelo menos 6 caracteres')
+        return
+      }
+
+      // Enviar dados para API
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        })
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        setError(result.message || 'Erro ao cadastrar')
+        return
+      }
+
+      console.log('✅ Registration successful:', result.user)
+      router.push('/login?message=Conta criada com sucesso! Faça login para continuar.')
+      
+    } catch (error) {
+      console.error('❌ Registration failed:', error)
+      setError('Erro ao conectar com o servidor')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,6 +167,12 @@ export default function Register() {
               />
             </div>
             
+            {error && (
+              <div className="bg-red-500/20 border border-red-500 text-red-400 px-4 py-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={isLoading}
