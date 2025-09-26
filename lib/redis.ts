@@ -34,6 +34,7 @@ redis.on('connect', () => {
 
 redis.on('error', (error) => {
   console.error('❌ Redis connection error:', error)
+  // Redis é opcional, não falha a aplicação
 })
 
 redis.on('ready', () => {
