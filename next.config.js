@@ -4,6 +4,7 @@ const nextConfig = {
     domains: ['localhost', 'clipeiroai-1.onrender.com'],
   },
   output: 'standalone',
+  distDir: '.next',
   experimental: {
     outputFileTracingRoot: process.cwd(),
   },
