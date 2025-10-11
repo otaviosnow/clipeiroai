@@ -1,11 +1,11 @@
 services:
   # 🚀 BACKEND API
-  - type: web
-    name: clipeiro-backend
-    env: node
-    plan: free
-    buildCommand: cd backend && npm install && mkdir -p uploads/originals uploads/clips uploads/backgrounds temp
-    startCommand: cd backend && npm start
+      - type: web
+        name: clipeiro-backend
+        env: node
+        plan: free
+        buildCommand: cd backend && npm ci && npm run build && mkdir -p uploads/originals uploads/clips uploads/backgrounds temp
+        startCommand: cd backend && npm start
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
@@ -29,12 +29,12 @@ services:
         value: https://clipeiro-frontend.onrender.com
 
   # 🤖 WORKERS
-  - type: worker
-    name: clipeiro-workers
-    env: node
-    plan: free
-    buildCommand: cd workers && npm install
-    startCommand: cd workers && npm start
+      - type: worker
+        name: clipeiro-workers
+        env: node
+        plan: free
+        buildCommand: cd workers && npm ci && npm run build
+        startCommand: cd workers && npm start
     envVars:
       - key: NODE_ENV
         value: production
