@@ -1,27 +1,69 @@
 services:
+  # 🚀 BACKEND API
   - type: web
-    name: clipeiroai
+    name: clipeiro-backend
     env: node
     plan: free
-    buildCommand: npm ci && npm run build
-    startCommand: npm start
-    rootDir: ./
-    healthCheckPath: /api/health
-    autoDeploy: true
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        value: mongodb+srv://clipeiroai:otaviosnow2012@cluster0.0afjdgs.mongodb.net/clipeiro?retryWrites=true&w=majority&appName=Cluster0
+      - key: JWT_SECRET
+        value: clipeiro-jwt-secret-production-2024
+      - key: CRYPTO_SECRET
+        value: clipeiro-crypto-secret-production-2024
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_REGION
+        value: us-east-1
+      - key: AWS_BUCKET_NAME
+        value: clipeiro-videos
+      - key: REDIS_URL
+        fromService:
+          name: clipeiro-redis
+          type: redis
+          property: connectionString
+      - key: FRONTEND_URL
+        value: https://clipeiro-frontend.onrender.com
+
+  # 🤖 WORKERS
+  - type: worker
+    name: clipeiro-workers
+    env: node
+    plan: free
+    buildCommand: cd workers && npm install
+    startCommand: cd workers && npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
         value: mongodb+srv://clipeiroai:otaviosnow2012@cluster0.0afjdgs.mongodb.net/clipeiro?retryWrites=true&w=majority&appName=Cluster0
-      - key: JWT_SECRET
-        value: clipeiro-super-secret-jwt-key-2024
-      - key: NEXTAUTH_SECRET
-        value: clipeiro-nextauth-secret-key-2024
-      - key: NEXTAUTH_URL
-        value: https://clipeiroai-1.onrender.com
-      - key: DEV_BYPASS_AUTH
-        value: false
-      - key: LOG_LEVEL
-        value: info
       - key: REDIS_URL
-        value: redis://redis:6379
+        fromService:
+          name: clipeiro-redis
+          type: redis
+          property: connectionString
+
+  # 🎨 FRONTEND
+  - type: web
+    name: clipeiro-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://clipeiro-backend.onrender.com/api
+
+# 🔄 REDIS
+databases:
+  - name: clipeiro-redis
+    plan: free
+    region: oregon

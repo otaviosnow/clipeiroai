@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # 🚀 BACKEND
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/backend.Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - CRYPTO_SECRET=${CRYPTO_SECRET}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    volumes:
+      - backend-temp:/app/temp
+      - backend-uploads:/app/uploads
+      - backend-logs:/app/logs
+    restart: unless-stopped
+
+  # 🤖 WORKERS
+  workers:
+    build:
+      context: ..
+      dockerfile: docker/workers.Dockerfile
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=${MONGODB_URI}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+      - backend
+    volumes:
+      - workers-temp:/app/temp
+      - workers-logs:/app/logs
+    restart: unless-stopped
+
+  # 🔄 REDIS
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+volumes:
+  backend-temp:
+  backend-uploads:
+  backend-logs:
+  workers-temp:
+  workers-logs:
+  redis-data:

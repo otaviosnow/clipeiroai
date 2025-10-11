@@ -1,0 +1,20 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/analytics-portugues/page": "app/analytics-portugues/page.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/auth/register/route": "app/api/auth/register/route.js",
+  "/api/health/route": "app/api/health/route.js",
+  "/api/metrics/route": "app/api/metrics/route.js",
+  "/api/onboarding/route": "app/api/onboarding/route.js",
+  "/dashboard-dark/page": "app/dashboard-dark/page.js",
+  "/login/page": "app/login/page.js",
+  "/api/onboarding/update/route": "app/api/onboarding/update/route.js",
+  "/onboarding/choose-product/page": "app/onboarding/choose-product/page.js",
+  "/onboarding/page": "app/onboarding/page.js",
+  "/page": "app/page.js",
+  "/onboarding/social-usernames/page": "app/onboarding/social-usernames/page.js",
+  "/register/page": "app/register/page.js",
+  "/select-nicho/page": "app/select-nicho/page.js",
+  "/viral-analysis/page": "app/viral-analysis/page.js",
+  "/upload-video/page": "app/upload-video/page.js"
+}

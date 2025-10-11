@@ -1,218 +1,262 @@
-# Clipeiro 🎬
+# 🚀 CLIPEIRO V2 - SISTEMA COMPLETO
 
-Plataforma para transformar seus vídeos em múltiplos formatos de clipes e postar automaticamente nas redes sociais.
+## 📖 Sobre
 
-## 🚀 Funcionalidades
+**Clipeiro** é um SaaS que transforma vídeos longos em 10 clipes virais automaticamente e publica no TikTok usando automação inteligente.
 
-- **Upload de Vídeos**: Faça upload de seus vídeos originais
-- **Geração Automática**: Transforme 1 vídeo em 10 formatos diferentes automaticamente
-- **Múltiplas Contas**: Conecte até 10 contas do TikTok, Instagram e YouTube
-- **Agendamento**: Agende posts para data e hora específicas
-- **Painel Admin**: Gerencie vídeos de fundo e configurações
-- **Design Moderno**: Interface azul/roxo minimalista e responsiva
+### ✨ Funcionalidades
 
-## 🛠️ Tecnologias
-
-- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
-- **Backend**: Next.js API Routes, MongoDB, Mongoose
-- **Autenticação**: JWT, bcryptjs
-- **Processamento de Vídeo**: FFmpeg
-- **Email**: Nodemailer
-- **UI**: Framer Motion, Lucide React, React Hot Toast
-
-## 📋 Pré-requisitos
-
-- Node.js 18+ 
-- MongoDB
-- FFmpeg instalado no sistema
-
-## 🚀 Instalação
-
-1. **Clone o repositório**
-```bash
-git clone https://github.com/seu-usuario/clipeiro.git
-cd clipeiro
-```
-
-2. **Instale as dependências**
-```bash
-npm install
-```
-
-3. **Configure as variáveis de ambiente**
-```bash
-cp .env.example .env.local
-```
-
-Edite o arquivo `.env.local` com suas configurações:
-
-```env
-MONGODB_URI=mongodb://localhost:27017/clipeiro
-JWT_SECRET=seu_jwt_secret_super_seguro_aqui
-NEXTAUTH_SECRET=seu_nextauth_secret_aqui
-NEXTAUTH_URL=http://localhost:3000
-
-# Email configuration
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=seu_email@gmail.com
-EMAIL_PASS=sua_senha_de_app
-
-# Social Media APIs
-TIKTOK_CLIENT_KEY=seu_tiktok_client_key
-TIKTOK_CLIENT_SECRET=seu_tiktok_client_secret
-INSTAGRAM_APP_ID=seu_instagram_app_id
-INSTAGRAM_APP_SECRET=seu_instagram_app_secret
-YOUTUBE_CLIENT_ID=seu_youtube_client_id
-YOUTUBE_CLIENT_SECRET=seu_youtube_client_secret
-```
-
-4. **Inicie o MongoDB**
-```bash
-# Se usando Docker
-docker run -d -p 27017:27017 --name mongodb mongo
-
-# Ou inicie seu MongoDB local
-mongod
-```
-
-5. **Execute o projeto**
-```bash
-npm run dev
-```
-
-Acesse [http://localhost:3000](http://localhost:3000)
-
-## 📱 Como Usar
-
-### 1. Criar Conta
-- Acesse a página inicial
-- Clique em "Começar Grátis"
-- Preencha seus dados e crie sua conta
-
-### 2. Upload de Vídeo
-- Faça login no dashboard
-- Na aba "Upload", arraste e solte seu vídeo
-- Aguarde o processamento automático
-
-### 3. Visualizar Clipes
-- Na aba "Clipes", visualize os 10 formatos gerados
-- Cada clipe tem um estilo diferente:
-  - Tela dividida (topo/base)
-  - Zoom focado
-  - Legendas estilo CapCut
-  - Efeitos de borda
-  - E muito mais!
-
-### 4. Agendar Posts
-- Clique em "Agendar" em qualquer clipe
-- Selecione as contas de destino
-- Escolha data e horário
-- Adicione legenda e hashtags
-
-### 5. Gerenciar Vídeos de Fundo
-- Acesse o painel admin
-- Faça upload de vídeos de fundo
-- Organize por categorias e tags
-
-## 🔧 Configuração das APIs
-
-### TikTok Business API
-1. Acesse [TikTok for Business](https://business.tiktok.com/)
-2. Crie uma aplicação
-3. Configure as URLs de callback
-4. Obtenha Client Key e Client Secret
-
-### Instagram Basic Display API
-1. Acesse [Facebook Developers](https://developers.facebook.com/)
-2. Crie uma aplicação
-3. Adicione o produto "Instagram Basic Display"
-4. Configure as URLs de callback
-5. Obtenha App ID e App Secret
-
-### YouTube Data API
-1. Acesse [Google Cloud Console](https://console.cloud.google.com/)
-2. Crie um projeto
-3. Ative a YouTube Data API v3
-4. Crie credenciais OAuth 2.0
-5. Configure as URLs de callback
-
-## 📁 Estrutura do Projeto
-
-```
-clipeiro/
-├── app/                    # App Router (Next.js 14)
-│   ├── api/               # API Routes
-│   │   ├── auth/          # Autenticação
-│   │   ├── videos/        # Vídeos e clipes
-│   │   ├── schedule/      # Agendamento
-│   │   └── admin/         # Painel admin
-│   ├── dashboard/         # Dashboard principal
-│   ├── login/            # Páginas de auth
-│   └── admin/            # Painel administrativo
-├── components/           # Componentes React
-├── lib/                  # Utilitários
-├── models/              # Modelos MongoDB
-├── uploads/              # Arquivos enviados
-└── middleware.ts         # Middleware de auth
-```
-
-## 🎨 Formatos de Clipes
-
-A plataforma gera automaticamente 10 formatos diferentes:
-
-1. **Split Screen Top** - Metade do vídeo em cima
-2. **Split Screen Bottom** - Metade do vídeo embaixo  
-3. **Zoom Focus** - Zoom em partes específicas
-4. **Caption Style 1** - Legendas estilo CapCut
-5. **Caption Style 2** - Outro estilo de legenda
-6. **Border Effect** - Efeitos de borda
-7. **Overlay Text** - Texto sobreposto
-8. **Highlight Clip** - Destaque de momentos
-9. **Slow Motion** - Câmera lenta
-10. **Fast Motion** - Acelerado
-
-## 🚀 Deploy
-
-### Render.com
-1. Conecte seu repositório GitHub
-2. Configure as variáveis de ambiente
-3. Deploy automático
-
-### Vercel
-1. Conecte seu repositório
-2. Configure as variáveis de ambiente
-3. Deploy com um clique
-
-## 🤝 Contribuindo
-
-1. Fork o projeto
-2. Crie uma branch para sua feature
-3. Commit suas mudanças
-4. Push para a branch
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## 🆘 Suporte
-
-Se você encontrar algum problema ou tiver dúvidas:
-
-1. Abra uma [issue](https://github.com/seu-usuario/clipeiro/issues)
-2. Entre em contato: seu-email@exemplo.com
-
-## 🎯 Roadmap
-
-- [ ] Integração com mais redes sociais
-- [ ] IA para otimização automática
-- [ ] Analytics avançados
-- [ ] Templates personalizáveis
-- [ ] API pública
-- [ ] App mobile
+- ✅ **Upload de vídeos** (máx 2GB por vídeo, 6GB total)
+- ✅ **Geração automática** de 10 clipes com FFmpeg
+- ✅ **Publicação automática** no TikTok com Playwright
+- ✅ **2FA automation** (hitools.pro)
+- ✅ **Analytics** completo (views, likes, engagement)
+- ✅ **Admin panel** para gerenciar perfis
+- ✅ **Sistema de filas** com BullMQ
 
 ---
 
-**Clipeiro** - Transforme seus vídeos em clipes virais! 🚀
+## 🏗️ Arquitetura
 
+```
+FRONTEND (React + Vite)
+     ↓
+BACKEND (Express + MongoDB)
+     ↓
+WORKERS (Playwright + BullMQ)
+     ↓
+TIKTOK (Publicação automática)
+```
+
+---
+
+## 🛠️ Stack Tecnológica
+
+### Backend
+- Node.js + Express
+- MongoDB Atlas
+- AWS S3
+- BullMQ + Redis
+- FFmpeg
+- JWT + bcrypt
+
+### Workers
+- Playwright
+- BullMQ
+- 2FA automation
+
+### Frontend
+- React 18
+- Vite
+- TailwindCSS
+- Framer Motion
+- Zustand
+
+---
+
+## 📦 Instalação
+
+### 1. Clonar repositório
+\`\`\`bash
+git clone https://github.com/otaviosnow/clipeiroai.git
+cd clipeiro
+\`\`\`
+
+### 2. Instalar dependências
+
+#### Backend:
+\`\`\`bash
+cd backend
+npm install
+\`\`\`
+
+#### Workers:
+\`\`\`bash
+cd workers
+npm install
+npx playwright install chromium
+\`\`\`
+
+#### Frontend:
+\`\`\`bash
+cd frontend
+npm install
+\`\`\`
+
+### 3. Configurar variáveis de ambiente
+
+#### Backend (.env):
+\`\`\`env
+NODE_ENV=development
+PORT=5000
+MONGODB_URI=mongodb+srv://clipeiroai:otaviosnow2012@cluster0.0afjdgs.mongodb.net/clipeiro
+JWT_SECRET=clipeiro-jwt-secret-2024
+CRYPTO_SECRET=clipeiro-crypto-secret-2024
+AWS_ACCESS_KEY_ID=your_key_here
+AWS_SECRET_ACCESS_KEY=your_secret_here
+AWS_REGION=us-east-1
+AWS_BUCKET_NAME=clipeiro-videos
+REDIS_URL=redis://localhost:6379
+FRONTEND_URL=http://localhost:3000
+\`\`\`
+
+#### Workers (.env):
+\`\`\`env
+NODE_ENV=development
+MONGODB_URI=mongodb+srv://clipeiroai:otaviosnow2012@cluster0.0afjdgs.mongodb.net/clipeiro
+REDIS_URL=redis://localhost:6379
+\`\`\`
+
+#### Frontend (.env):
+\`\`\`env
+VITE_API_URL=http://localhost:5000/api
+\`\`\`
+
+---
+
+## 🚀 Executar Localmente
+
+### Opção 1: Separado
+
+Terminal 1 - Backend:
+\`\`\`bash
+cd backend
+npm run dev
+\`\`\`
+
+Terminal 2 - Workers:
+\`\`\`bash
+cd workers
+npm run dev
+\`\`\`
+
+Terminal 3 - Frontend:
+\`\`\`bash
+cd frontend
+npm run dev
+\`\`\`
+
+Terminal 4 - Redis:
+\`\`\`bash
+redis-server
+\`\`\`
+
+### Opção 2: Docker Compose
+\`\`\`bash
+docker-compose -f docker/docker-compose.yml up
+\`\`\`
+
+---
+
+## 🌐 Deploy no Render
+
+### 1. Conectar repositório GitHub
+- Acesse: https://dashboard.render.com/
+- Conecte seu repositório
+
+### 2. Configurar serviços
+O arquivo \`render.yaml\` já está configurado com:
+- ✅ Backend (Web Service)
+- ✅ Workers (Background Worker)
+- ✅ Frontend (Static Site)
+- ✅ Redis (Database)
+
+### 3. Adicionar variáveis de ambiente
+No Render, adicione:
+- \`AWS_ACCESS_KEY_ID\`
+- \`AWS_SECRET_ACCESS_KEY\`
+
+---
+
+## 📋 Fluxo do Sistema
+
+### 1. Usuário faz upload
+\`\`\`
+Upload vídeo → S3 → Backend salva no MongoDB
+\`\`\`
+
+### 2. Gerar clipes
+\`\`\`
+User clica "Gerar" → Job BullMQ → Worker FFmpeg → 10 clipes → S3
+\`\`\`
+
+### 3. Publicar no TikTok
+\`\`\`
+User clica "Publicar" → Job BullMQ → Worker Playwright → Login TikTok → 2FA → Upload vídeo → Post
+\`\`\`
+
+---
+
+## 👑 Admin
+
+### Primeiro Admin
+- Email: tavinmktdigital@gmail.com
+- Senha: tata2012
+
+### Funcionalidades Admin
+- Criar perfis de corte TikTok
+- Upload de vídeos background (100 vídeos)
+- Ver logs de todos usuários
+- Estatísticas gerais
+
+---
+
+## 🎨 Design System
+
+### Cores
+- **Primary Red**: #FF4757
+- **Black**: #0A0A0A
+- **White**: #FFFFFF
+- **Gray**: #1A1A1A
+
+### Animações
+- Motion vertical no scroll
+- Hover zoom nos cards
+- Progress bars animados
+- Transições suaves
+
+---
+
+## 📊 Limites
+
+- **Vídeo individual**: 2GB máximo
+- **Storage total**: 6GB por usuário
+- **Clipes por vídeo**: 10 automáticos
+- **Perfis por plataforma**: 10 máximo
+- **Posts por hora**: 10 máximo (rate limiting)
+
+---
+
+## 🔧 Tecnologias
+
+### Processamento de Vídeo
+- **FFmpeg**: Corte e combinação
+- **Formato**: MP4 (H.264 + AAC)
+- **Resolução**: 1080x1920 (9:16 vertical)
+
+### Automação
+- **Playwright**: Navegação headless
+- **2FA**: hitools.pro integration
+- **Human simulation**: Delays e movimentos naturais
+
+### Queue System
+- **BullMQ**: Filas de jobs
+- **Redis**: Cache e mensageria
+- **Concurrency**: 2 clips, 1 post por vez
+
+---
+
+## 📞 Suporte
+
+- **Email**: suporte@clipeiro.com
+- **GitHub**: https://github.com/otaviosnow/clipeiroai
+
+---
+
+## 📝 Licença
+
+MIT License - Clipeiro 2025
+
+---
+
+**🎉 Sistema completo e pronto para produção!**
