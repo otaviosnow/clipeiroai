@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-clipeiro-black text-clipeiro-white font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+
+  /* Botão primário */
+  .btn-primary {
+    @apply bg-gradient-red text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-clipeiro-red/50;
+  }
+
+  /* Botão secundário */
+  .btn-secondary {
+    @apply bg-clipeiro-gray border border-clipeiro-red text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-clipeiro-red/10;
+  }
+
+  /* Card */
+  .card {
+    @apply glass rounded-xl p-6 transition-all duration-300 hover:border-clipeiro-red/50 hover:shadow-lg hover:shadow-clipeiro-red/20;
+  }
+
+  /* Input */
+  .input {
+    @apply bg-clipeiro-gray border border-white/10 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-clipeiro-red focus:ring-2 focus:ring-clipeiro-red/20 transition-all;
+  }
+
+  /* Sidebar item */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-white/5 hover:border-l-4 hover:border-clipeiro-red cursor-pointer;
+  }
+
+  .sidebar-item.active {
+    @apply bg-clipeiro-red/10 border-l-4 border-clipeiro-red;
+  }
+}
+
+/* Scrollbar customizado */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1A1A1A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF4757;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E63946;
+}
+
+/* Animações personalizadas */
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
