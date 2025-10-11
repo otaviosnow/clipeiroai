@@ -2,7 +2,7 @@
 const ffmpeg = require('fluent-ffmpeg');
 const path = require('path');
 const fs = require('fs').promises;
-const { uploadToS3 } = require('../config/aws');
+const { uploadFile } = require('../config/storage');
 
 // Diretório temporário para processamento
 const TEMP_DIR = path.join(__dirname, '../../temp');
@@ -136,15 +136,15 @@ exports.uploadClips = async (clipFiles, userId, originalVideoId) => {
         size: fileStats.size
       };
 
-      // Upload para S3
-      const s3Result = await uploadToS3(file, 'clips');
+      // Upload para storage
+      const uploadResult = await uploadFile(file, 'clips');
 
       uploadedClips.push({
         userId,
         type: 'clip',
         filename: file.originalname,
-        s3Key: s3Result.key,
-        s3Url: s3Result.url,
+        s3Key: uploadResult.key,
+        s3Url: uploadResult.url,
         size: file.size,
         format: 'mp4',
         originalVideoId,

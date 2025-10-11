@@ -2,7 +2,7 @@
 const User = require('../models/User');
 const Media = require('../models/Media');
 const Log = require('../models/Log');
-const { uploadToS3 } = require('../config/aws');
+const { uploadFile } = require('../config/storage');
 
 // @desc    Upload vídeo original
 // @route   POST /api/upload/video
@@ -37,17 +37,17 @@ exports.uploadVideo = async (req, res) => {
       });
     }
 
-    // Upload para S3
-    console.log('📤 Uploading video to S3...');
-    const s3Result = await uploadToS3(req.file, 'originals');
+    // Upload para storage
+    console.log('📤 Uploading video...');
+    const uploadResult = await uploadFile(req.file, 'originals');
 
     // Criar registro no banco
     const media = await Media.create({
       userId,
       type: 'original',
       filename: req.file.originalname,
-      s3Key: s3Result.key,
-      s3Url: s3Result.url,
+      s3Key: uploadResult.key,
+      s3Url: uploadResult.url,
       size: fileSize,
       format: req.file.mimetype.split('/')[1],
       status: 'ready'
@@ -114,14 +114,14 @@ exports.uploadBackgrounds = async (req, res) => {
 
     // Upload múltiplos vídeos
     for (const file of req.files) {
-      const s3Result = await uploadToS3(file, 'backgrounds');
+      const uploadResult = await uploadFile(file, 'backgrounds');
 
       const media = await Media.create({
         userId: req.user._id,
         type: 'background',
         filename: file.originalname,
-        s3Key: s3Result.key,
-        s3Url: s3Result.url,
+        s3Key: uploadResult.key,
+        s3Url: uploadResult.url,
         size: file.size,
         format: file.mimetype.split('/')[1],
         status: 'ready',
